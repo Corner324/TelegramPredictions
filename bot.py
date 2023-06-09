@@ -2,14 +2,16 @@ import logging
 import config
 import asyncio
 import prediction
+import time as ttime
 from aiogram import Bot, Dispatcher, types
 from aiogram.utils import executor
 from datetime import datetime, time
 
 '''
 TODO: 
-1) Проверить event_handler на  время
-2) Написать парсер для предсказания
+1) [X]  Проверить event_handler на время
+2) [X] Написать парсер для предсказания
+3) [ ] Найти хостинг под бота
 '''
 
 def transform_date(date):
@@ -41,22 +43,23 @@ async def start_handler(message: types.Message):
     usern_full_name = message.from_user.full_name
     logging.info(f'{user_id} | {usern_full_name} | {datetime.now()}')
     logging.info(message.chat.id)
-    # await message.reply(datetime.now().strftime("%H:%M"))
     predict = get_full_predict()
     await bot.send_message(config.chat_id, predict)
 
 async def event_handler():
-    current_time = datetime.now().time()
-    target_time = time(18, 0)  # Укажите желаемое время события
-    if current_time >= target_time:
-        data = prediction.parsing_horo()
-        await bot.send_message(config.chat_id, str(data))
+    current_time = str(datetime.now().time().hour) + ':' +  str(datetime.now().time().minute)
+
+    if current_time == config.target_time:
+        logging.info(f'Сообщение отправлено. | {datetime.now()}')
+        predict = get_full_predict()
+        ttime.sleep(60)
+        await bot.send_message(config.chat_id, predict)
         
 
 async def schedule_events():
     while True:
         await event_handler()
-        await asyncio.sleep(60)  # Проверяем каждую минуту
+        await asyncio.sleep(30) 
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
