@@ -32,6 +32,14 @@ def get_full_predict():
     res = f'Прогноз на {intro} \n' + data
     return res
 
+def optimize_minute():
+    if len(str(datetime.now().time().minute)) == 1:
+        minu = '0' + str(datetime.now().time().minute)
+    else:
+        minu = str(datetime.now().time().minute)
+        
+    return minu
+
 logging.basicConfig(level=logging.INFO)
 TOKEN = config.token
 bot = Bot(token=TOKEN)
@@ -46,13 +54,16 @@ async def start_handler(message: types.Message):
     predict = get_full_predict()
     await bot.send_message(config.chat_id, predict)
 
-async def event_handler():
-    current_time = str(datetime.now().time().hour) + ':' +  str(datetime.now().time().minute)
 
+        
+async def event_handler():
+    
+    minu = optimize_minute()
+    current_time = str(datetime.now().time().hour) + ':' +  minu
     if current_time == config.target_time:
-        logging.info(f'Сообщение отправлено. | {datetime.now()}')
         predict = get_full_predict()
         ttime.sleep(60)
+        logging.info(f'Сообщение отправлено. | {datetime.now()}')
         await bot.send_message(config.chat_id, predict)
         
 
