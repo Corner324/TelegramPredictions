@@ -56,7 +56,9 @@ async def start_handler(message: types.Message):
     logging.info(f'{user_id} | {usern_full_name} | {datetime.now()}')
     logging.info(message.chat.id)
     predict = get_full_predict()
-    await bot.send_message(config.chat_id, predict)
+    await bot.send_message(config.chat_id_test, 'Тестовый чат')
+    #await bot.send_message(config.chat_id_main, 'Основной чат')
+    # await bot.send_message(config.chat_id_test, predict)
 
 
         
@@ -68,7 +70,7 @@ async def event_handler():
         predict = get_full_predict()
         ttime.sleep(60)
         logging.info(f'Сообщение отправлено. | {datetime.now()}')
-        await bot.send_message(config.chat_id, predict)
+        await bot.send_message(config.chat_id_main, predict)
         
 
 async def schedule_events():
