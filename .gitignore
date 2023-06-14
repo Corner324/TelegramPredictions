@@ -1,2 +1,4 @@
 config.py
 telegramBot/
+__pycache__/
+.vscode/

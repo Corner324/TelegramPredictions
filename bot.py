@@ -1,4 +1,4 @@
-import logging
+import logger
 import config
 import asyncio
 import prediction
@@ -12,11 +12,17 @@ TODO:
 1) [X]  Проверить event_handler на время
 2) [X] Написать парсер для предсказания
 3) [X] Найти хостинг под бота
-4) [ ] Создать логирование в файл
-5) [ ] Исправить ошибки покрытием
+4) [T] Создать логирование в файл
+5) [T] Исправить ошибки покрытием
 6) [ ] Пересмотреть архитектуру
-7) [ ] Быстрая разверстка на сервере
+7) [T] Быстрая разверстка на сервере
 '''
+
+logger = logger.Logger()
+TOKEN = config.token
+bot = Bot(token=TOKEN)
+dispatch = Dispatcher(bot=bot)
+
 
 def transform_date(date):
 
@@ -36,6 +42,7 @@ def get_full_predict():
     res = f'Прогноз на {intro} \n' + data
     return res
 
+
 def optimize_minute():
     if len(str(datetime.now().time().minute)) == 1:
         minu = '0' + str(datetime.now().time().minute)
@@ -44,22 +51,11 @@ def optimize_minute():
         
     return minu
 
-logging.basicConfig(level=logging.INFO)
-TOKEN = config.token
-bot = Bot(token=TOKEN)
-dispatch = Dispatcher(bot=bot)
 
 @dispatch.message_handler(commands=['start'])
 async def start_handler(message: types.Message):
-    user_id = message.from_user.id
-    usern_full_name = message.from_user.full_name
-    logging.info(f'{user_id} | {usern_full_name} | {datetime.now()}')
-    logging.info(message.chat.id)
-    predict = get_full_predict()
+    #predict = get_full_predict()
     await bot.send_message(config.chat_id_test, 'Тестовый чат')
-    #await bot.send_message(config.chat_id_main, 'Основной чат')
-    # await bot.send_message(config.chat_id_test, predict)
-
 
         
 async def event_handler():
@@ -68,8 +64,13 @@ async def event_handler():
     current_time = str(datetime.now().time().hour) + ':' +  minu
     if current_time == config.target_time:
         predict = get_full_predict()
+        
+        if not predict:
+            logger.warning_info()
+            return 0
+            
         ttime.sleep(60)
-        logging.info(f'Сообщение отправлено. | {datetime.now()}')
+        logger.send_info_message()
         await bot.send_message(config.chat_id_main, predict)
         
 
@@ -78,7 +79,9 @@ async def schedule_events():
         await event_handler()
         await asyncio.sleep(30) 
 
+
 if __name__ == '__main__':
+    
     loop = asyncio.get_event_loop()
     loop.create_task(schedule_events())
-    executor.start_polling(dispatch, loop=loop)
+    executor.start_polling(dispatch, loop=loop, skip_updates=False)
