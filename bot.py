@@ -15,7 +15,7 @@ TODO:
 4) [T] Создать логирование в файл
 5) [T] Исправить ошибки покрытием
 6) [ ] Пересмотреть архитектуру
-7) [T] Быстрая разверстка на сервере
+7) [X] Быстрая разверстка на сервере
 '''
 
 logger = logger.Logger()
@@ -54,8 +54,9 @@ def optimize_minute():
 
 @dispatch.message_handler(commands=['start'])
 async def start_handler(message: types.Message):
-    #predict = get_full_predict()
-    await bot.send_message(config.chat_id_test, 'Тестовый чат')
+    logger.send_info_message()
+    logger.warning_info()
+    #await bot.send_message(config.chat_id_test, 'Тестовый чат')
 
         
 async def event_handler():
@@ -66,7 +67,7 @@ async def event_handler():
         predict = get_full_predict()
         
         if not predict:
-            logger.warning_info()
+            logger.warning_info('Prediction miss')
             return 0
             
         ttime.sleep(60)
@@ -75,13 +76,18 @@ async def event_handler():
         
 
 async def schedule_events():
-    while True:
-        await event_handler()
-        await asyncio.sleep(30) 
+    try:
+        while True:
+            await event_handler()
+            await asyncio.sleep(30) 
+    except:
+        logger.warning_info('While block')
 
 
 if __name__ == '__main__':
-    
-    loop = asyncio.get_event_loop()
-    loop.create_task(schedule_events())
-    executor.start_polling(dispatch, loop=loop, skip_updates=False)
+    try:
+        loop = asyncio.get_event_loop()
+        loop.create_task(schedule_events())
+        executor.start_polling(dispatch, loop=loop, skip_updates=False)
+    except:
+        logger.warning_info('Main block')

@@ -1,4 +1,5 @@
 aiogram
+asyncio
 requests
 lxml
 BeautifulSoup4
