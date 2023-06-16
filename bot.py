@@ -17,6 +17,7 @@ TODO:
 5) [T] Исправить ошибки покрытием
 6) [ ] Пересмотреть архитектуру
 7) [X] Быстрая разверстка на сервере
+8) [ ] Добавить функцию под Debug
 '''
 
 logger = logger.Logger()
@@ -83,7 +84,7 @@ async def schedule_events():
     try:
         while True:
             await event_handler()
-            await asyncio.sleep(10) 
+            await asyncio.sleep(20) 
     except:
         logger.warning_info('While block')
 
