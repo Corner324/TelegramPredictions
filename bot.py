@@ -2,6 +2,7 @@ import logger
 import config
 import asyncio
 import prediction
+import sys
 import time as ttime
 from aiogram import Bot, Dispatcher, types
 from aiogram.utils import executor
@@ -63,23 +64,26 @@ async def event_handler():
     
     minu = optimize_minute()
     current_time = str(datetime.now().time().hour) + ':' +  minu
+    if sys.argv[1] == '-d':
+        print('Target - ' + config.target_time)
+        print('Current - ' + current_time)
     if current_time == config.target_time:
         predict = get_full_predict()
         
         if not predict:
             logger.warning_info('Prediction miss')
             return 0
-            
-        ttime.sleep(60)
+        
         logger.send_info_message()
-        await bot.send_message(config.chat_id_main, predict)
+        await bot.send_message(config.chat_id_test, predict)
+        ttime.sleep(60)
         
 
 async def schedule_events():
     try:
         while True:
             await event_handler()
-            await asyncio.sleep(30) 
+            await asyncio.sleep(10) 
     except:
         logger.warning_info('While block')
 
