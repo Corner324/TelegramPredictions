@@ -18,6 +18,8 @@ TODO:
 6) [ ] Пересмотреть архитектуру
 7) [X] Быстрая разверстка на сервере
 8) [ ] Добавить функцию под Debug
+9) [ ] Добавить в rep виртуальное окружение
+10) [] Добавить логирование отправки в тестовый чат
 '''
 
 logger = logger.Logger()
@@ -76,7 +78,7 @@ async def event_handler():
             return 0
         
         logger.send_info_message()
-        await bot.send_message(config.chat_id_test, predict)
+        await bot.send_message(config.chat_id_main, predict)
         ttime.sleep(60)
         
 
