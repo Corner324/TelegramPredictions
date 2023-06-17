@@ -1,7 +1,7 @@
 <br/>
 <p align="center">
   <a href="https://github.com/Corner324/TelegramPredictions">
-    <img src="https://i.imgur.com/19Qdspm.png" alt="Logo" width="80" height="80">
+    <img src="https://i.imgur.com/mTPZfH1.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Telegram Bot Prediction</h3>
