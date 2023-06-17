@@ -90,7 +90,7 @@ async def event_handler():
     minu = optimize_minute()
     current_time = str(datetime.now().time().hour) + ':' +  minu
     if debug_is_on():
-        print('Target - ' + config.target_time)
+        # print('Target - ' + config.target_time)
         print('Current - ' + current_time)
         
     if current_time == config.target_time:

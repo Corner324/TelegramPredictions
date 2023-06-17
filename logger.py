@@ -9,7 +9,7 @@ class Logger:
     bot = None
     
     def __init__(self, bot):
-        logging.basicConfig(level=logging.INFO, filename="debug_log.log", format="%(asctime)s %(levelname)s %(message)s")
+        logging.basicConfig(level=logging.INFO, filename="debug.log", format="%(asctime)s %(levelname)s %(message)s")
         
         self.bot = bot
         self.message_warn = f'[WARN] %s | {datetime.now()}'
