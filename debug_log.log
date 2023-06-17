@@ -1,0 +1,36 @@
+2023-06-17 23:32:03,652 INFO Bot: \u2648\ufe0f ОВЕН | Знаки зодиака [@OvenAssistBot]
+2023-06-17 23:32:03,653 INFO Start polling.
+2023-06-17 23:33:24,890 INFO Stop polling...
+2023-06-17 23:33:24,890 WARNING Goodbye!
+2023-06-17 23:36:03,721 WARNING [WARN] While block | 2023-06-17 23:35:08.011109
+Traceback (most recent call last):
+  File "C:\Users\Corner\Desktop\TelegramBot\bot.py", line 89, in schedule_events
+    await asyncio.sleep(20)
+  File "C:\Users\Corner\AppData\Local\Programs\Python\Python311\Lib\asyncio\tasks.py", line 639, in sleep
+    return await future
+           ^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+2023-06-17 23:36:03,724 WARNING [WARN] Main block | 2023-06-17 23:35:08.011109
+Traceback (most recent call last):
+  File "C:\Users\Corner\Desktop\TelegramBot\bot.py", line 100, in <module>
+    executor.start_polling(dispatch, loop=loop)
+  File "C:\Users\Corner\Desktop\TelegramBot\telegramBot\Lib\site-packages\aiogram\utils\executor.py", line 45, in start_polling
+    executor.start_polling(
+  File "C:\Users\Corner\Desktop\TelegramBot\telegramBot\Lib\site-packages\aiogram\utils\executor.py", line 317, in start_polling
+    loop = asyncio.get_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Corner\AppData\Local\Programs\Python\Python311\Lib\asyncio\events.py", line 677, in get_event_loop
+    raise RuntimeError('There is no current event loop in thread %r.'
+RuntimeError: There is no current event loop in thread 'MainThread'.
+2023-06-17 23:37:33,133 INFO Bot: \u2648\ufe0f ОВЕН | Знаки зодиака [@OvenAssistBot]
+2023-06-17 23:37:33,133 INFO Start polling.
+2023-06-17 23:38:06,034 INFO Stop polling...
+2023-06-17 23:38:06,034 WARNING Goodbye!
+2023-06-17 23:38:11,037 INFO Bot: \u2648\ufe0f ОВЕН | Знаки зодиака [@OvenAssistBot]
+2023-06-17 23:38:11,038 INFO Start polling.
+2023-06-17 23:39:22,673 INFO Stop polling...
+2023-06-17 23:39:22,674 WARNING Goodbye!
+2023-06-17 23:43:47,727 INFO Bot: \u2648\ufe0f ОВЕН | Знаки зодиака [@OvenAssistBot]
+2023-06-17 23:43:47,727 INFO Start polling.
+2023-06-17 23:44:01,328 INFO Stop polling...
+2023-06-17 23:44:01,329 WARNING Goodbye!

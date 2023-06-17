@@ -116,8 +116,9 @@ async def schedule_events():
 
 if __name__ == '__main__':
     try:
-        loop = asyncio.get_event_loop()
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
         loop.create_task(schedule_events())
-        executor.start_polling(dispatch, loop=loop, skip_updates=False)
-    except:
-        logger.warning_info('Main block')
+        executor.start_polling(dispatch, loop=loop)
+    except Exception as e:
+        logger.warning_info('Main block: ' + str(e))
