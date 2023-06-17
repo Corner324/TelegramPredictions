@@ -7,7 +7,7 @@ class Logger:
     message_warn = ''
     
     def __init__(self):
-        logging.basicConfig(level=logging.INFO)
+        logging.basicConfig(level=logging.INFO, filename="debug_log.log", format="%(asctime)s %(levelname)s %(message)s")
         
         self.message_warn = f'[WARN] %s | {datetime.now()}'
         self.message_success = f'[SUCCESS] Message sends | {datetime.now()}'
@@ -19,7 +19,7 @@ class Logger:
         
             
     def warning_info(self, info_about_error = ''):
-        logging.info(self.message_warn % info_about_error)
+        logging.warning(self.message_warn % info_about_error, exc_info=True)
         self.logging_in_file(self.message_warn % info_about_error )
 
 
