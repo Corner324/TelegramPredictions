@@ -17,14 +17,13 @@ TODO:
 5) [T] Исправить ошибки покрытием
 6) [ ] Пересмотреть архитектуру
 7) [X] Быстрая разверстка на сервере
-8) [ ] Добавить функцию под Debug
-9) [ ] Добавить в rep виртуальное окружение
-10) [] Добавить логирование отправки в тестовый чат
+8) [X] Добавить функцию под Debug
+9) [X] Добавить логирование отправки в тестовый чат
 '''
 
-logger = logger.Logger()
 TOKEN = config.token
 bot = Bot(token=TOKEN)
+logger = logger.Logger(bot)
 dispatch = Dispatcher(bot=bot)
 
 
@@ -56,20 +55,44 @@ def optimize_minute():
     return minu
 
 
+def debug_is_on():
+    if sys.argv[1] == '-d':
+        return True
+    else:
+        return False
+
+
 @dispatch.message_handler(commands=['start'])
 async def start_handler(message: types.Message):
     logger.send_info_message()
     logger.warning_info()
     #await bot.send_message(config.chat_id_test, 'Тестовый чат')
 
+
+@dispatch.message_handler(commands=['check'])
+async def start_handler(message: types.Message):
+    minu = optimize_minute()
+    current_time = str(datetime.now().time().hour) + ':' +  minu
+    
+    res = f'Current time - {current_time}\nTarget time - {config.target_time}\n'
+    await bot.send_message(config.chat_id_test, res)
+
+
+@dispatch.message_handler(commands=['logs'])
+async def start_handler(message: types.Message):
+    with open('log.txt','r') as file:
+            data = file.read() 
+    await bot.send_message(config.chat_id_test, data)
+
         
 async def event_handler():
     
     minu = optimize_minute()
     current_time = str(datetime.now().time().hour) + ':' +  minu
-    if sys.argv[1] == '-d':
+    if debug_is_on():
         print('Target - ' + config.target_time)
         print('Current - ' + current_time)
+        
     if current_time == config.target_time:
         predict = get_full_predict()
         
