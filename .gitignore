@@ -1,5 +1,5 @@
 config.py
-telegramBot/
+BotEnv/
 **/__pycache__/
 .vscode/
 log.txt
