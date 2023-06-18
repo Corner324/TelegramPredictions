@@ -3,3 +3,4 @@ BotEnv/
 **/__pycache__/
 .vscode/
 log.txt
+logs.txt

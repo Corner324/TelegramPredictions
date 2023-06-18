@@ -7,6 +7,7 @@ import time as ttime
 from aiogram import Bot, Dispatcher, types
 from aiogram.utils import executor
 from datetime import datetime, time
+from aiogram.types import InputFile
 
 '''
 TODO: 
@@ -75,7 +76,20 @@ async def start_handler(message: types.Message):
     current_time = str(datetime.now().time().hour) + ':' +  minu
     
     res = f'Current time - {current_time}\nTarget time - {config.target_time}\n'
-    await bot.send_message(config.chat_id_test, res)
+    await message.replay(res)
+    
+    try:
+        with open('debug.log', 'r') as file:
+            data = file.read()
+            
+        with open('logs.txt', 'w') as file:
+            file.write(data)
+            
+        await message.answer_document(InputFile('logs.txt'))
+        
+    except:
+        await message.reply('Could not read or write the file')
+        
 
 
 @dispatch.message_handler(commands=['logs'])
@@ -114,11 +128,23 @@ async def schedule_events():
         logger.warning_info('While block')
 
 
+
+async def on_startup(x):
+    await logger.send_info_message('✅| Bot is Running')
+
+async def on_shutdown(x):
+    await logger.send_info_message('🆘| Bot is Shutdown!')
+
+
 if __name__ == '__main__':
     try:
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         loop.create_task(schedule_events())
-        executor.start_polling(dispatch, loop=loop)
+        executor.start_polling(dispatcher=dispatch,
+                               skip_updates=False,
+                               on_startup=on_startup,
+                               on_shutdown=on_shutdown,
+                               loop=loop)
     except Exception as e:
         logger.warning_info('Main block: ' + str(e))
