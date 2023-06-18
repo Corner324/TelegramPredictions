@@ -7,7 +7,7 @@ import time as ttime
 from aiogram import Bot, Dispatcher, types
 from aiogram.utils import executor
 from datetime import datetime, time
-from aiogram.types import InputFile
+
 
 '''
 TODO: 
@@ -76,19 +76,9 @@ async def start_handler(message: types.Message):
     current_time = str(datetime.now().time().hour) + ':' +  minu
     
     res = f'Current time - {current_time}\nTarget time - {config.target_time}\n'
-    await message.replay(res)
+    await message.reply(res)
     
-    try:
-        with open('debug.log', 'r') as file:
-            data = file.read()
-            
-        with open('logs.txt', 'w') as file:
-            file.write(data)
-            
-        await message.answer_document(InputFile('logs.txt'))
-        
-    except:
-        await message.reply('Could not read or write the file')
+    await logger.send_logs(bot)
         
 
 
@@ -123,7 +113,7 @@ async def schedule_events():
     try:
         while True:
             await event_handler()
-            await asyncio.sleep(20) 
+            await asyncio.sleep(15) 
     except:
         logger.warning_info('While block')
 
@@ -134,6 +124,7 @@ async def on_startup(x):
 
 async def on_shutdown(x):
     await logger.send_info_message('🆘| Bot is Shutdown!')
+    await logger.send_logs(bot)
 
 
 if __name__ == '__main__':
@@ -142,7 +133,7 @@ if __name__ == '__main__':
         asyncio.set_event_loop(loop)
         loop.create_task(schedule_events())
         executor.start_polling(dispatcher=dispatch,
-                               skip_updates=False,
+                               skip_updates=True,
                                on_startup=on_startup,
                                on_shutdown=on_shutdown,
                                loop=loop)
