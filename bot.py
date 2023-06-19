@@ -104,7 +104,7 @@ async def event_handler():
             logger.warning_info('Prediction miss')
             return 0
         
-        logger.send_info_message()
+        await logger.send_info_message()
         await bot.send_message(config.chat_id_main, predict)
         ttime.sleep(60)
         
