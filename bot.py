@@ -33,7 +33,8 @@ def transform_date(date):
     months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
            'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
     _, month, day = date.split('-')
-    day = str(day).replace('0','')
+    if str(day)[0] == '0':
+        day = str(day).replace('0','')
     return f'{day} {months[int(month) - 1]}'
 
 
