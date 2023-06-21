@@ -14,7 +14,7 @@ TODO:
 1) [X]  Проверить event_handler на время
 2) [X] Написать парсер для предсказания
 3) [X] Найти хостинг под бота
-4) [T] Создать логирование в файл
+4) [X] Создать логирование в файл
 5) [T] Исправить ошибки покрытием
 6) [ ] Пересмотреть архитектуру
 7) [X] Быстрая разверстка на сервере
@@ -75,13 +75,12 @@ async def start_handler(message: types.Message):
 async def start_handler(message: types.Message):
     minu = optimize_minute()
     current_time = str(datetime.now().time().hour) + ':' +  minu
-    
+
     res = f'Current time - {current_time}\nTarget time - {config.target_time}\n'
     await message.reply(res)
     
-    await logger.send_logs(bot)
+    await logger.send_logs(bot, message)
         
-
 
 @dispatch.message_handler(commands=['logs'])
 async def start_handler(message: types.Message):
@@ -89,6 +88,17 @@ async def start_handler(message: types.Message):
             data = file.read() 
     await bot.send_message(config.chat_id_test, data)
 
+def is_actual_time():
+    minu = optimize_minute()
+    current_time = str(datetime.now().time().hour) + ':' +  minu
+    
+    targer_hours, target_minut = config.target_time.split(':')
+    
+    if current_time == f'{targer_hours}:{target_minut}' or \
+        current_time == f'{targer_hours}:{str((int(target_minut)+1))}' or \
+        current_time == f'{targer_hours}:{str((int(target_minut)+2))}':
+            return True
+        
         
 async def event_handler():
     
@@ -98,7 +108,7 @@ async def event_handler():
         # print('Target - ' + config.target_time)
         print('Current - ' + current_time)
         
-    if current_time == config.target_time:
+    if is_actual_time():
         predict = get_full_predict()
         
         if not predict:
@@ -107,7 +117,7 @@ async def event_handler():
         
         await logger.send_info_message()
         await bot.send_message(config.chat_id_main, predict)
-        ttime.sleep(60)
+        ttime.sleep(190)
         
 
 async def schedule_events():

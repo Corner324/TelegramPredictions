@@ -4,6 +4,7 @@ import config
 import os
 from datetime import datetime
 from aiogram.types import InputFile
+from aiogram import Bot, Dispatcher, executor, types 
 
 
 class Logger:
@@ -35,7 +36,7 @@ class Logger:
         self.logging_in_file(self.message_warn % info_about_error )
 
 
-    async def send_logs(self, bot):
+    async def send_logs(self, bot, mess=None):
         current_time = str(datetime.now().time())
         
         try:
@@ -46,7 +47,11 @@ class Logger:
                 file.write(data)
             
             file_path = os.path.abspath('logs.txt')
-            await bot.send_document(chat_id = config.chat_id_test, document = InputFile(file_path), caption = f'Date: {current_time[:10]}')
+            identif = config.chat_id_test
+            if mess:
+                identif = mess.from_user.id  
+            
+            await bot.send_document(chat_id = identif, document = InputFile(file_path), caption = f'Date: {current_time[:10]}')
         
         except Exception as Ex:
             await bot.send_message(config.chat_id_test, f'Could not read or write the file:\n{Ex}')
