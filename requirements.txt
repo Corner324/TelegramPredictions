@@ -3,3 +3,4 @@ asyncio
 requests
 lxml
 BeautifulSoup4
+pytest
