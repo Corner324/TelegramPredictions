@@ -11,15 +11,11 @@ from datetime import datetime, time
 
 '''
 TODO: 
-1) [X]  Проверить event_handler на время
-2) [X] Написать парсер для предсказания
-3) [X] Найти хостинг под бота
-4) [X] Создать логирование в файл
-5) [T] Исправить ошибки покрытием
-6) [ ] Пересмотреть архитектуру
-7) [X] Быстрая разверстка на сервере
-8) [X] Добавить функцию под Debug
-9) [X] Добавить логирование отправки в тестовый чат
+1) [T] Исправить ошибки покрытием
+2) [ ] Пересмотреть архитектуру
+3) [ ] 
+4) [ ] 
+5) [ ] 
 '''
 
 TOKEN = config.token
@@ -28,33 +24,49 @@ logger = logger.Logger(bot)
 dispatch = Dispatcher(bot=bot)
 
 
-def transform_date(date):
+def optimize_date(date):
 
     months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
            'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
     _, month, day = date.split('-')
     if str(day)[0] == '0':
         day = str(day).replace('0','')
+        
     return f'{day} {months[int(month) - 1]}'
 
-
-def get_full_predict():
-    date = datetime.today()
-    date = str(date).split()[0]
-    intro = transform_date(date)
-
-    data = prediction.parsing_horo()
-    res = f'Прогноз на {intro} \n' + data
-    return res
+def get_hours():
+    return str(datetime.now().time().hour)
 
 
-def optimize_minute():
+def get_optimize_min():
     if len(str(datetime.now().time().minute)) == 1:
         minu = '0' + str(datetime.now().time().minute)
     else:
         minu = str(datetime.now().time().minute)
         
     return minu
+
+
+def get_full_predict():
+    date = datetime.today()
+    date = str(date).split()[0]
+    intro = optimize_date(date)
+
+    data = prediction.parsing_horo()
+    res = f'Прогноз на {intro} \n' + data
+    return res
+
+
+def is_actual_time():
+    minu = get_optimize_min()
+    current_time = str(datetime.now().time().hour) + ':' +  minu
+    
+    targer_hours, target_minut = config.target_time.split(':')
+    
+    if current_time == f'{targer_hours}:{target_minut}' or \
+        current_time == f'{targer_hours}:{str((int(target_minut)+1))}' or \
+        current_time == f'{targer_hours}:{str((int(target_minut)+2))}':
+            return True
 
 
 def debug_is_on():
@@ -64,21 +76,16 @@ def debug_is_on():
         return False
 
 
-@dispatch.message_handler(commands=['start'])
-async def start_handler(message: types.Message):
-    logger.send_info_message()
-    logger.warning_info()
-    #await bot.send_message(config.chat_id_test, 'Тестовый чат')
-
-
 @dispatch.message_handler(commands=['check'])
 async def start_handler(message: types.Message):
-    minu = optimize_minute()
-    current_time = str(datetime.now().time().hour) + ':' +  minu
+    minu = get_optimize_min()
+    hour = get_hours()
+    current_time = f'{hour}:{minu}'
 
-    res = f'Current time - {current_time}\nTarget time - {config.target_time}\n'
+    res = f'Current time - {current_time}\n\
+            Target time - {config.target_time}\n'
+            
     await message.reply(res)
-    
     await logger.send_logs(bot, message)
         
 
@@ -88,34 +95,24 @@ async def start_handler(message: types.Message):
             data = file.read() 
     await bot.send_message(config.chat_id_test, data)
 
-def is_actual_time():
-    minu = optimize_minute()
-    current_time = str(datetime.now().time().hour) + ':' +  minu
-    
-    targer_hours, target_minut = config.target_time.split(':')
-    
-    if current_time == f'{targer_hours}:{target_minut}' or \
-        current_time == f'{targer_hours}:{str((int(target_minut)+1))}' or \
-        current_time == f'{targer_hours}:{str((int(target_minut)+2))}':
-            return True
-        
         
 async def event_handler():
     
-    minu = optimize_minute()
+    minu = get_optimize_min()
     current_time = str(datetime.now().time().hour) + ':' +  minu
     if debug_is_on():
         # print('Target - ' + config.target_time)
         print('Current - ' + current_time)
+        await logger.send_info_message(current_time, timer=True)
         
     if is_actual_time():
         predict = get_full_predict()
         
         if not predict:
-            logger.warning_info('Prediction miss')
+            await logger.send_warning_message('Prediction miss')
             return 0
         
-        await logger.send_info_message()
+        await logger.send_info_message('Prediction posted!')
         await bot.send_message(config.chat_id_main, predict)
         ttime.sleep(190)
         
@@ -125,9 +122,8 @@ async def schedule_events():
         while True:
             await event_handler()
             await asyncio.sleep(15) 
-    except:
-        logger.warning_info('While block')
-
+    except Exception as Ex:
+        logger.send_warning_message(f'While block\nP{Ex}')
 
 
 async def on_startup(x):
@@ -149,4 +145,4 @@ if __name__ == '__main__':
                                on_shutdown=on_shutdown,
                                loop=loop)
     except Exception as e:
-        logger.warning_info('Main block: ' + str(e))
+        logger.send_warning_message('Main block: ' + str(e))

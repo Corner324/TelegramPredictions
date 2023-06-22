@@ -4,7 +4,6 @@ import config
 import os
 from datetime import datetime
 from aiogram.types import InputFile
-from aiogram import Bot, Dispatcher, executor, types 
 
 
 class Logger:
@@ -20,20 +19,19 @@ class Logger:
         self.message_success = f'[SUCCESS] Message sends | {datetime.now()}'
 
 
-    async def send_info_message(self, mes=None):
+    async def send_info_message(self, mes=None, timer=False):
         if mes:
+            if not timer:
+                await self.bot.send_message(config.chat_id_test, mes)
             logging.info(mes) 
-            await self.bot.send_message(config.chat_id_test, mes)
-            self.logging_in_file(mes)
+
         else:
-            logging.info(self.message_success) 
             await self.bot.send_message(config.chat_id_test, self.message_success)
-            self.logging_in_file(self.message_success)
-        
+            logging.info(self.message_success) 
+
             
-    def warning_info(self, info_about_error = ''):
+    def send_warning_message(self, info_about_error = ''):
         logging.warning(self.message_warn % info_about_error, exc_info=True)
-        self.logging_in_file(self.message_warn % info_about_error )
 
 
     async def send_logs(self, bot, mess=None):
@@ -55,10 +53,3 @@ class Logger:
         
         except Exception as Ex:
             await bot.send_message(config.chat_id_test, f'Could not read or write the file:\n{Ex}')
-            
-
-    def logging_in_file(self, text):
-        pass
-        # Except 'charmap' codec can't encode character
-        # with open('log.txt','w') as file:
-        #     file.write(text + '\n')        
