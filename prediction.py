@@ -11,6 +11,5 @@ def parsing_horo():
         temp = bs.find('div', 'article__item article__item_alignment_left article__item_html')
 
         return temp.text
-    except Exception as Ex:
-        
+    except Exception:
         return None

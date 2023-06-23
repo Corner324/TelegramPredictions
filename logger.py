@@ -2,14 +2,16 @@ import logging
 import asyncio
 import config
 import os
+
 from datetime import datetime
 from aiogram.types import InputFile
 
 
 class Logger:
-    message_success = ''
-    message_warn = ''
+    message_success : str
+    message_warn : str
     bot = None
+    
     
     def __init__(self, bot):
         logging.basicConfig(level=logging.INFO, filename="debug.log", filemode="w", format="%(asctime)s %(levelname)s %(message)s")
