@@ -13,8 +13,8 @@ from datetime import datetime, time
 TODO: 
 1) [T] Исправить ошибки покрытием
 2) [ ] Пересмотреть архитектуру
-3) [ ] Кидать .log файл, а не .txt
-4) [ ] При отправке .log файла печатать и день, окргулить таймер
+3) [T] Кидать .log файл, а не .txt
+4) [T] При отправке .log файла печатать и день, окргулить таймер
 5) [ ] 
 '''
 
@@ -45,6 +45,12 @@ def get_optimize_min():
         minu = str(datetime.now().time().minute)
         
     return minu
+
+
+def get_current_time():
+    minu = get_optimize_min()
+    hour = get_hours()
+    return f'{hour}:{minu}'
 
 
 def get_full_predict():
@@ -78,9 +84,7 @@ def debug_is_on():
 
 @dispatch.message_handler(commands=['check'])
 async def start_handler(message: types.Message):
-    minu = get_optimize_min()
-    hour = get_hours()
-    current_time = f'{hour}:{minu}'
+    current_time = get_current_time()
 
     res = f'Current time - {current_time}\n\
             Target time - {config.target_time}\n'
@@ -97,9 +101,8 @@ async def start_handler(message: types.Message):
 
         
 async def event_handler():
+    current_time = get_current_time()
     
-    minu = get_optimize_min()
-    current_time = str(datetime.now().time().hour) + ':' +  minu
     if debug_is_on():
         # print('Target - ' + config.target_time)
         print('Current - ' + current_time)

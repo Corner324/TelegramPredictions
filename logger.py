@@ -2,6 +2,7 @@ import logging
 import asyncio
 import config
 import os
+import main_bot
 
 from datetime import datetime
 from aiogram.types import InputFile
@@ -37,21 +38,21 @@ class Logger:
 
 
     async def send_logs(self, bot, mess=None):
-        current_time = str(datetime.now().time())
+        date = str(datetime.now().time().day)
         
         try:
-            with open('debug.log', 'r') as file:
-                data = file.read()
+            # with open('debug.log', 'r') as file:
+            #     data = file.read()
                 
-            with open('logs.txt', 'w') as file:
-                file.write(data)
+            # with open('logs.txt', 'w') as file:
+            #     file.write(data)
             
-            file_path = os.path.abspath('logs.txt')
+            file_path = os.path.abspath('debug.log')
             identif = config.chat_id_test
             if mess:
                 identif = mess.from_user.id  
             
-            await bot.send_document(chat_id = identif, document = InputFile(file_path), caption = f'Date: {current_time[:10]}')
+            await bot.send_document(chat_id = identif, document = InputFile(file_path), caption = f'Date: {main_bot.get_current_time} {date}')
         
         except Exception as Ex:
             await bot.send_message(config.chat_id_test, f'Could not read or write the file:\n{Ex}')
