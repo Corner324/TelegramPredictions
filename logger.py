@@ -2,7 +2,7 @@ import logging
 import asyncio
 import config
 import os
-import main_bot
+from main_bot import get_current_time
 
 from datetime import datetime
 from aiogram.types import InputFile
@@ -52,7 +52,7 @@ class Logger:
             if mess:
                 identif = mess.from_user.id  
             
-            await bot.send_document(chat_id = identif, document = InputFile(file_path), caption = f'Date: {main_bot.get_current_time} {date}')
+            await bot.send_document(chat_id = identif, document = InputFile(file_path), caption = f'Date: {get_current_time} {date}')
         
         except Exception as Ex:
             await bot.send_message(config.chat_id_test, f'Could not read or write the file:\n{Ex}')
