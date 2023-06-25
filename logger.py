@@ -38,7 +38,6 @@ class Logger:
 
 
     async def send_logs(self, bot, mess=None):
-        date = str(datetime.now().time().day)
         
         try:
             # with open('debug.log', 'r') as file:
@@ -52,7 +51,7 @@ class Logger:
             if mess:
                 identif = mess.from_user.id  
             
-            await bot.send_document(chat_id = identif, document = InputFile(file_path), caption = f'Date: {get_current_time} {date}')
+            await bot.send_document(chat_id = identif, document = InputFile(file_path), caption = f'Time: {get_current_time()}')
         
         except Exception as Ex:
             await bot.send_message(config.chat_id_test, f'Could not read or write the file:\n{Ex}')

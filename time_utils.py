@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, time
 
 def get_hours():
     return str(datetime.now().time().hour)
