@@ -7,6 +7,7 @@ import time as ttime
 from aiogram import Bot, Dispatcher, types
 from aiogram.utils import executor
 from datetime import datetime, time
+from time_utils import get_current_time
 
 
 '''
@@ -34,23 +35,7 @@ def optimize_date(date):
         
     return f'{day} {months[int(month) - 1]}'
 
-def get_hours():
-    return str(datetime.now().time().hour)
 
-
-def get_optimize_min():
-    if len(str(datetime.now().time().minute)) == 1:
-        minu = '0' + str(datetime.now().time().minute)
-    else:
-        minu = str(datetime.now().time().minute)
-        
-    return minu
-
-
-def get_current_time():
-    minu = get_optimize_min()
-    hour = get_hours()
-    return f'{hour}:{minu}'
 
 
 def get_full_predict():
@@ -64,8 +49,7 @@ def get_full_predict():
 
 
 def is_actual_time():
-    minu = get_optimize_min()
-    current_time = str(datetime.now().time().hour) + ':' +  minu
+    current_time = get_current_time()
     
     targer_hours, target_minut = config.target_time.split(':')
     

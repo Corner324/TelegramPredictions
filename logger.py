@@ -2,7 +2,7 @@ import logging
 import asyncio
 import config
 import os
-from main_bot import get_current_time
+from time_utils import get_current_time
 
 from datetime import datetime
 from aiogram.types import InputFile

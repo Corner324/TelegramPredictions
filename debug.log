@@ -1,0 +1,39 @@
+2023-06-26 00:06:37,939 WARNING [WARN] While block
+Pmodule 'datetime' has no attribute 'now' | 2023-06-26 00:06:37.935543
+Traceback (most recent call last):
+  File "c:\Users\mosen\Desktop\TelegramBot\main_bot.py", line 112, in schedule_events
+    await event_handler()
+  File "c:\Users\mosen\Desktop\TelegramBot\main_bot.py", line 88, in event_handler
+    current_time = get_current_time()
+                   ^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mosen\Desktop\TelegramBot\time_utils.py", line 17, in get_current_time
+    minu = get_optimize_min()
+           ^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mosen\Desktop\TelegramBot\time_utils.py", line 8, in get_optimize_min
+    if len(str(datetime.now().time().minute)) == 1:
+               ^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'now'
+2023-06-26 00:06:38,104 INFO Bot: \u2648\ufe0f ОВЕН | Знаки зодиака [@OvenAssistBot]
+2023-06-26 00:06:38,206 WARNING Updates were skipped successfully.
+2023-06-26 00:06:38,302 INFO \u2705| Bot is Running
+2023-06-26 00:06:38,302 INFO Start polling.
+2023-06-26 00:06:43,223 INFO \U0001f198| Bot is Shutdown!
+2023-06-26 00:06:43,224 WARNING [WARN] Main block: 'datetime.time' object has no attribute 'day' | 2023-06-26 00:06:37.935543
+Traceback (most recent call last):
+  File "c:\Users\mosen\Desktop\TelegramBot\main_bot.py", line 131, in <module>
+    executor.start_polling(dispatcher=dispatch,
+  File "C:\Users\mosen\Desktop\TelegramBot\BotEnv\Lib\site-packages\aiogram\utils\executor.py", line 45, in start_polling
+    executor.start_polling(
+  File "C:\Users\mosen\Desktop\TelegramBot\BotEnv\Lib\site-packages\aiogram\utils\executor.py", line 328, in start_polling
+    loop.run_until_complete(self._shutdown_polling())
+  File "C:\Users\mosen\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\mosen\Desktop\TelegramBot\BotEnv\Lib\site-packages\aiogram\utils\executor.py", line 381, in _shutdown_polling
+    await callback(self.dispatcher)
+  File "c:\Users\mosen\Desktop\TelegramBot\main_bot.py", line 123, in on_shutdown
+    await logger.send_logs(bot)
+  File "c:\Users\mosen\Desktop\TelegramBot\logger.py", line 41, in send_logs
+    date = str(datetime.now().time().day)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'datetime.time' object has no attribute 'day'
