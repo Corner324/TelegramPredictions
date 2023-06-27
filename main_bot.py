@@ -70,8 +70,8 @@ def debug_is_on():
 async def start_handler(message: types.Message):
     current_time = get_current_time()
 
-    res = f'Current time - {current_time}\n\
-            Target time - {config.target_time}\n'
+    res = f'Current time - {current_time}\
+            \nTarget time - {config.target_time}\n'
             
     await message.reply(res)
     await logger.send_logs(bot, message)
@@ -88,20 +88,21 @@ async def event_handler():
     current_time = get_current_time()
     
     if debug_is_on():
-        # print('Target - ' + config.target_time)
+        print(' - Target - ' + config.target_time)
         print('Current - ' + current_time)
         await logger.send_info_message(current_time, timer=True)
+        await logger.send_info_message(" - " + config.target_time, timer=True)
         
     if is_actual_time():
+        await logger.send_info_message('Time for posting!')
         predict = get_full_predict()
         
         if not predict:
             await logger.send_warning_message('Prediction miss')
             return 0
         
-        await logger.send_info_message(predict)
+        await logger.send_info_message('Prediction posted!\n' + predict)
         
-        await logger.send_info_message('Prediction posted!')
         await bot.send_message(config.chat_id_main, predict)
         ttime.sleep(190)
         
