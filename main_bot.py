@@ -7,7 +7,7 @@ import time as ttime
 from aiogram import Bot, Dispatcher, types
 from aiogram.utils import executor
 from datetime import datetime, time
-from time_utils import get_current_time
+from utils.time_utils import get_current_time
 
 
 '''

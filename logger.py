@@ -2,7 +2,7 @@ import logging
 import asyncio
 import config
 import os
-from time_utils import get_current_time
+from utils.time_utils import get_current_time
 
 from datetime import datetime
 from aiogram.types import InputFile
@@ -40,12 +40,6 @@ class Logger:
     async def send_logs(self, bot, mess=None):
         
         try:
-            # with open('debug.log', 'r') as file:
-            #     data = file.read()
-                
-            # with open('logs.txt', 'w') as file:
-            #     file.write(data)
-            
             file_path = os.path.abspath('debug.log')
             identif = config.chat_id_test
             if mess:
