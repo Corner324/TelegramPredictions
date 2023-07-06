@@ -1,7 +1,7 @@
 import logger
 import config
 import asyncio
-import prediction
+import parser_predict
 import sys
 import time as ttime
 from aiogram import Bot, Dispatcher, types
@@ -43,7 +43,7 @@ def get_full_predict():
     date = str(date).split()[0]
     intro = optimize_date(date)
 
-    data = prediction.parsing_horo()
+    data = parser_predict.parsing_horo()
     res = f'Прогноз на {intro} \n' + data
     return res
 

@@ -10,7 +10,7 @@ Traceback (most recent call last):
     if sys.argv[1] == '-d':
        ~~~~~~~~^^^
 IndexError: list index out of range
-2023-06-26 00:13:07,008 INFO Bot: \u2648\ufe0f ОВЕН | Знаки зодиака [@OvenAssistBot]
+2023-06-26 00:13:07,008 INFO Bot: \u2648\ufe0f пїЅпїЅпїЅпїЅ | пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ [@OvenAssistBot]
 2023-06-26 00:13:07,110 WARNING Updates were skipped successfully.
 2023-06-26 00:13:07,186 INFO \u2705| Bot is Running
 2023-06-26 00:13:07,187 INFO Start polling.
