@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "telegrambot"
+version = "0.1.0"
+description = ""
+authors = ["Corner324 <mosenn@mail.ru>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiogram = "^2.25.1"
+asyncio = "^3.4.3"
+requests = "^2.31.0"
+lxml = "^4.9.3"
+pytest = "^7.4.0"
+python-dotenv = "^1.0.0"
+beautifulsoup4 = "^4.12.2"
+virtualenv = "^20.23.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
