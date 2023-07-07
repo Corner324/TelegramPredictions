@@ -4,7 +4,6 @@ import lxml
 import config
 
 def parsing_horo():
-    # Comments
     try:
         response = requests.get(config.url)
         bs = BeautifulSoup(response.text,"lxml")

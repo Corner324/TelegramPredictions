@@ -1,19 +1,9 @@
-2023-06-26 00:13:06,824 WARNING [WARN] While block
-Plist index out of range | 2023-06-26 00:13:06.820013
-Traceback (most recent call last):
-  File "C:\Users\mosen\Desktop\TelegramBot\main_bot.py", line 112, in schedule_events
-    await event_handler()
-  File "C:\Users\mosen\Desktop\TelegramBot\main_bot.py", line 90, in event_handler
-    if debug_is_on():
-       ^^^^^^^^^^^^^
-  File "C:\Users\mosen\Desktop\TelegramBot\main_bot.py", line 63, in debug_is_on
-    if sys.argv[1] == '-d':
-       ~~~~~~~~^^^
-IndexError: list index out of range
-2023-06-26 00:13:07,008 INFO Bot: \u2648\ufe0f пїЅпїЅпїЅпїЅ | пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ [@OvenAssistBot]
-2023-06-26 00:13:07,110 WARNING Updates were skipped successfully.
-2023-06-26 00:13:07,186 INFO \u2705| Bot is Running
-2023-06-26 00:13:07,187 INFO Start polling.
-2023-06-26 00:13:31,153 INFO \U0001f198| Bot is Shutdown!
-2023-06-26 00:13:31,250 INFO Stop polling...
-2023-06-26 00:13:31,252 WARNING Goodbye!
+2023-07-07 12:33:03,163 INFO 12:33
+2023-07-07 12:33:03,163 INFO  - 7:00
+2023-07-07 12:33:03,328 INFO Bot: \u2648\ufe0f ОВЕН | Знаки зодиака [@OvenAssistBot]
+2023-07-07 12:33:03,431 WARNING Updates were skipped successfully.
+2023-07-07 12:33:03,534 INFO \u2705| Bot is Running
+2023-07-07 12:33:03,535 INFO Start polling.
+2023-07-07 12:33:09,919 INFO \U0001f198| Bot is Shutdown!
+2023-07-07 12:33:10,084 INFO Stop polling...
+2023-07-07 12:33:10,085 WARNING Goodbye!
