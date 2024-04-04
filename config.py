@@ -31,6 +31,3 @@ class Environment:
 
 
 print(Environment().check_tokens())
-print(Environment().chat_id_main)
-print(Environment().chat_id_test)
-print(Environment().target_time2)
