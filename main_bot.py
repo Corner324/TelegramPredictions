@@ -72,11 +72,10 @@ def is_actual_time():
     current_time = get_current_time()
 
     targer_hours, target_minut = config.target_time2.split(":")
-
     if (
-        current_time == f"{targer_hours}:{target_minut}"
-        or current_time == f"{targer_hours}:{str((int(target_minut)+1))}"
-        or current_time == f"{targer_hours}:{str((int(target_minut)+2))}"
+        current_time == f"{str(int(targer_hours)-3)}:{target_minut}"
+        or current_time == f"{str(int(targer_hours)-3)}:{str((int(target_minut)+1))}"
+        or current_time == f"{str(int(targer_hours)-3)}:{str((int(target_minut)+2))}"
     ):
         return True
 
