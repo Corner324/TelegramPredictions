@@ -20,7 +20,7 @@ from aiogram.utils.markdown import hbold
 
 
 """
-TODO: 
+TODO:
 1) [T] Исправить ошибки покрытием
 2) [ ] Пересмотреть архитектуру
 3) [X] Кидать .log файл, а не .txt
@@ -73,9 +73,9 @@ def is_actual_time():
 
     targer_hours, target_minut = config.target_time2.split(":")
     if (
-        current_time == f"{str(int(targer_hours)-3)}:{target_minut}"
-        or current_time == f"{str(int(targer_hours)-3)}:{str((int(target_minut)+1))}"
-        or current_time == f"{str(int(targer_hours)-3)}:{str((int(target_minut)+2))}"
+        current_time == f"{str(int(targer_hours))}:{target_minut}"
+        or current_time == f"{str(int(targer_hours))}:{str((int(target_minut)+1))}"
+        or current_time == f"{str(int(targer_hours))}:{str((int(target_minut)+2))}"
     ):
         return True
 

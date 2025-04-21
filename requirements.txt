@@ -6,3 +6,4 @@ BeautifulSoup4
 pytest
 python-dotenv
 virtualenv
+pytz

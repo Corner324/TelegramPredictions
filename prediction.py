@@ -10,9 +10,12 @@ def parsing_horo():
         bs = BeautifulSoup(response.text, "lxml")
 
         temp = bs.find(
-            "div", "article__item article__item_alignment_left article__item_html"
+            "main", "e45a4c1552 be13d659a4 navigationContainer_1 dcced6f448"
         )
 
         return temp.text
     except Exception as e:
         print(e)
+
+if __name__ == "__main__":
+    print(parsing_horo())
