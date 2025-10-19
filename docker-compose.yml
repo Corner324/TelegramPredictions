@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  telegram-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: telegram-predictions-bot
+    restart: unless-stopped
+    environment:
+      - token=${TELEGRAM_TOKEN}
+      - chat_id_main=${CHAT_ID_MAIN}
+      - chat_id_test=${CHAT_ID_TEST}
+      - target_time=${TARGET_TIME}
+      - target_time2=${TARGET_TIME2}
+      - url=${PREDICTION_URL}
+    volumes:
+      - ./logs:/app/logs
+      - ./debug.log:/app/debug.log:rw
+    networks:
+      - bot-network
+    # Ограничения ресурсов для безопасности
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+    # Политика безопасности
+    security_opt:
+      - no-new-privileges:true
+    # Пользователь без привилегий
+    user: "1000:1000"
+    # Только необходимые возможности
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    # Читаемые файлы
+    read_only: true
+    # Временные директории для записи
+    tmpfs:
+      - /tmp
+      - /var/tmp
+    # Мониторинг здоровья
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import requests; requests.get('https://api.telegram.org/bot${TELEGRAM_TOKEN}/getMe', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  bot-network:
+    driver: bridge
+    name: telegram-bot-network
